@@ -1,0 +1,90 @@
+@import "../../_base.scss";
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background: $black-primary;
+    padding:1rem 3rem;
+
+    height:10vh;
+    width:100%;
+
+    position:fixed;
+    top:0;
+
+    z-index:999;
+    &__menu{
+        display:none;
+    }
+    &__logo{
+        height:21px;
+        object-fit: contain;
+        display: block;
+    }
+    form{
+       flex:0.6; 
+       display:flex;
+       padding: 0.1em;
+       margin:0.1rem;
+       border-radius:3px;
+       border:1.2px solid rgba(255, 255, 255, 0.178);
+       background-color:$black-secondary;
+       input{
+           width:100%;
+           border:none;
+           font-weight:500;
+           background:transparent;
+           padding:0.3rem;
+           color:$text-color;
+
+           &:focus{
+               outline-width: 0;
+           }
+       }
+       button{
+           border:none;
+           padding:0 1.25rem;
+           background:rgba(255, 255, 255, 0.068);
+           font-size:x-large !important;
+           color: rgba(255, 255, 255, 0.698) !important;
+           &:focus{
+               border:none;
+           }
+       }
+    }
+    &__icons{
+        flex:0.15;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        svg{
+            margin-right:12px;
+        }
+        
+    }
+}
+@media (max-width:$breakpoint-small){
+    .header{
+        padding:1rem;
+
+        .form{
+            flex:1;
+        }
+        &__menu{
+            display:block;
+        }
+        &__logo{
+            display:none;
+        }
+        &__icons > *:not(.MuiAvatar-root){
+            display:none;
+        }
+    }
+}
+
+@media (max-width:300px) {
+    .header > form > button{
+        padding: 0px 0.3rem;
+    }
+}

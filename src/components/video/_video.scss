@@ -1,0 +1,80 @@
+@import "../../_base.scss";
+
+.row{
+    // height: 90vh;
+    // overflow-y: scroll;
+    scrollbar-width: 0;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}
+
+.video{
+    
+
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+
+    font-weight: 500;
+    font-size: 0.9rem;
+
+    cursor: pointer;
+
+    &__top{
+        margin: 0.5rem;
+        position: relative;
+        .lazy-load-image-background{
+            width: 100%;
+        }
+        img{
+            width: 100%;
+        }
+        .video__duration{
+            position: absolute;
+
+            bottom:0.3rem;
+            right:0.3rem;
+
+            padding:0 0.2rem;
+            background: #1a1a1ad5;
+            border-radius: 3px;
+
+        }
+
+    }
+
+    &__title{
+        margin:0.1rem;
+        color: $text-color;
+        @include line-clamp(1);
+        
+    }
+    &__details{
+
+        display:flex;
+        align-items: center;
+        // span{
+        //     margin: 0 0.3rem;
+        // }
+
+    }
+    &__channel{
+        
+        display:flex;
+        align-items: center;
+        margin: 0.5rem;
+        p{
+            @include line-clamp(1);
+        }
+        &Logo{
+            width: 1.92rem !important;
+            height: 1.92rem !important;
+            margin-right: 12px;
+        }
+
+        
+    }
+    p{
+        margin-bottom: 0;
+    }
+}

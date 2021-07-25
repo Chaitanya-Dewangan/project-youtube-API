@@ -1,0 +1,43 @@
+@import "../../_base.scss";
+
+.categoriesBar{
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    cursor: pointer;
+
+    scrollbar-width: none;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    
+    span{
+        margin-right: 1rem;
+        padding: 0.5rem;
+        
+        white-space: nowrap;
+        border: 1.5px solid $text-color;
+        border-radius: 999px;
+        transition: all 0.2s ease-in;
+        &:hover{
+            background-color:#4d5153 ;
+        }
+        &.active{
+            color: white;
+            background-color: #606060;
+            border-color: $border-color;
+        }
+        scroll-snap-align: start;
+    }
+
+}
+
+@media (max-width:300px) {
+    .categoriesBar{
+        margin:0;
+        width: 87vw;
+    }
+}
