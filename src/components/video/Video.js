@@ -12,19 +12,20 @@ import {Avatar} from "@material-ui/core";
 import request from '../../api';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const Video = ({video}) => {
-    const {id,snippet:{channelId,channelTitle,title,publishedAt,thumbnails:{medium}}}=video;
+const Video = ({video,channelScreen}) => {
+    const {id,snippet:{channelId,channelTitle,title,publishedAt,thumbnails:{medium}},contentDetails}=video;
 
 
+    const [channelIcon,setChannelIcon] = useState(null);
+    
     const [views, setViews] = useState(null);
     const [duration, setDuration] = useState(null);
 
-    const [channelIcon,setChannelIcon] = useState(null);
 
     const seconds = moment.duration(duration).asSeconds();
     const _duration = moment.utc(seconds * 1000).format("mm:ss");
 
-    const _videoId = id?.videoId || id;
+    const _videoId = id?.videoId || contentDetails?.videoId || id;
 
     const history =useHistory();
 
@@ -79,17 +80,17 @@ const Video = ({video}) => {
             <AiFillEye /> {numeral(views).format("0.a").toLocaleUpperCase()}{" "}
             Views
           </span>
-          •<span>{moment(publishedAt).fromNow()}</span>
+          •<span className="video__moment">{moment(publishedAt).fromNow()}</span>
         </div>
 
-        <div className="video__channel">
+        {!channelScreen && (<div className="video__channel">
           <Avatar
             className="video__channelLogo"
             src={channelIcon?.url}
             alt=""
           />
           <p>{channelTitle}</p>
-        </div>
+        </div>)}
       </div>
     );
 }

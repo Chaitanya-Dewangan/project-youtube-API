@@ -12,6 +12,8 @@ import {
     MdLibraryBooks,
 
 } from "react-icons/md"
+import {Link} from "react-router-dom";
+
 
 const Sidebar = ({sidebar,handleToggleSidebar}) => {
     const dispatch = useDispatch();
@@ -24,22 +26,30 @@ const Sidebar = ({sidebar,handleToggleSidebar}) => {
         className={`sidebar ${sidebar && "open"}`}
         onClick={() => handleToggleSidebar(false)}
       >
-        <li>
-          <MdHome size={23} />
-          <span>Home</span>
-        </li>
-        <li>
-          <MdSubscriptions size={23} />
-          <span>Subscriptions</span>
-        </li>
-        <li>
-          <MdThumbUp size={23} />
-          <span>Liked Video</span>
-        </li>
-        <li>
-          <MdHistory size={23} />
-          <span>History</span>
-        </li>
+        <Link to="/">
+          <li>
+            <MdHome size={23} />
+            <span>Home</span>
+          </li>
+        </Link>
+        <Link to="/feed/subscriptions">
+          <li>
+            <MdSubscriptions size={23} />
+            <span>Subscriptions</span>
+          </li>
+        </Link>
+        
+          <li>
+            <MdThumbUp size={23} />
+            <span>Liked Video</span>
+          </li>
+        
+        
+          <li>
+            <MdHistory size={23} />
+            <span>History</span>
+          </li>
+        
 
         <hr />
 
@@ -52,7 +62,7 @@ const Sidebar = ({sidebar,handleToggleSidebar}) => {
           <span>Feedback</span>
         </li>
         <hr />
-        <li onClick={logOutHandler} >
+        <li onClick={logOutHandler}>
           <MdExitToApp size={23} />
           <span>Exit</span>
         </li>

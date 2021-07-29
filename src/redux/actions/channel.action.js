@@ -1,8 +1,9 @@
 import {
-    CHANNEL_DETAILS_REQUEST,
-    CHANNEL_DETAILS_SUCCESS,
-    CHANNEL_DETAILS_FAIL,
-} from '../actionType';
+  CHANNEL_DETAILS_REQUEST,
+  CHANNEL_DETAILS_SUCCESS,
+  CHANNEL_DETAILS_FAIL,
+  SET_SUBSCRIPTION_STATUS,
+} from "../actionType";
 
 import request from "../../api";
 
@@ -19,13 +20,13 @@ export const getChannelDetails = (id) => async (dispatch) => {
     });
     dispatch({
       type: CHANNEL_DETAILS_SUCCESS,
-      payload: data.items[0],
+      payload: data?.items[0],
     });
   } catch (err) {
-      console.log(err.response.data)
+      console.log(err?.response?.data)
     dispatch({
       type: CHANNEL_DETAILS_FAIL,
-      payload: err.response.data,
+      payload: err?.response?.data,
     });
   }
 };
@@ -34,24 +35,24 @@ export const getChannelDetails = (id) => async (dispatch) => {
 
 export const checkSubscriptionStatus = (id) => async (dispatch,getState) => {
   try {
-    dispatch({
-      type: CHANNEL_DETAILS_REQUEST,
-    });
-    const { data } = await request("/channels", {
+    
+    const { data } = await request("/subscriptions", {
       params: {
-        part: "snippet,statistics,contentDetails",
-        id,
+        part: "snippet",
+        forChannelId: id,
+        mine:true
       },
+      headers:{
+        Authorization:`Bearer ${getState().auth.accessToken} `
+      }
     });
+
     dispatch({
-      type: CHANNEL_DETAILS_SUCCESS,
-      payload: data.items[0],
+      type: SET_SUBSCRIPTION_STATUS,
+      payload: data?.items?.length!==0,
     });
+
   } catch (err) {
     console.log(err.response.data);
-    dispatch({
-      type: CHANNEL_DETAILS_FAIL,
-      payload: err.response.data,
-    });
   }
 };

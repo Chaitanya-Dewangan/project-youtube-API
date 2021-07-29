@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "firebase": "^8.7.1",
+    "firebase-tools": "^9.16.0",
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
     "numeral": "^2.0.6",

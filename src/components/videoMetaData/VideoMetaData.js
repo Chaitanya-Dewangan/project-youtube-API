@@ -8,23 +8,34 @@ import { Avatar } from "@material-ui/core";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import ShowMoreText from "react-show-more-text";
 
+import {useHistory} from "react-router-dom"
 import {useDispatch,useSelector} from 'react-redux';
-import {getChannelDetails} from '../../redux/actions/channel.action'
+import {
+  getChannelDetails,
+  checkSubscriptionStatus,
+} from "../../redux/actions/channel.action";
 
 const VideoMetaData = ({video:{snippet,statistics},videoId}) => {
 
   const {title,description,channelId,channelTitle,publishedAt} = snippet;
-  const { viewCount,dislikeCount, likeCount } = statistics;;
-
+  const { viewCount,dislikeCount, likeCount } = statistics;
+  const history = useHistory();
+  const handleChannelClick = () =>{
+    history.push(`/channel/${channelId}`);
+  }
+  
   const dispatch = useDispatch();
 
 
   useEffect(() => {
     dispatch(getChannelDetails(channelId));
+    dispatch(checkSubscriptionStatus(channelId));
   }, [dispatch, channelId]);
 
   const {snippet:channelSnippet,statistics:channelStatistics}=useSelector(state => state.channelDetails.channel)
-
+  const subscriptionStatus = useSelector(
+    (state) => state.channelDetails.subscriptionStatus
+  );
   return (
     <div className="VideoMetaData py-2">
       <div className="videoMetaData__top">
@@ -52,7 +63,7 @@ const VideoMetaData = ({video:{snippet,statistics},videoId}) => {
         </div>
       </div>
       <div className="videoMetaData__channel d-flex justify-content-between align-items-center my-2 py-3 ">
-        <div className="d-flex">
+        <div className="d-flex pointer-cursor " onClick={handleChannelClick}>
           <Avatar
             className="mr-3"
             src={channelSnippet?.thumbnails?.default?.url}
@@ -63,14 +74,20 @@ const VideoMetaData = ({video:{snippet,statistics},videoId}) => {
             <span>
               <span className="mrg-3">
                 {numeral(channelStatistics?.subscriberCount)
-                  .format("0.0.a")
+                  .format("0.0a")
                   .toLocaleUpperCase()}
               </span>
               Subscriber
             </span>
           </div>
         </div>
-        <button className="button border-0 p-2 m-2">Subscribe</button>
+        <button
+          className={` border-0 p-2 m-2 ${
+            subscriptionStatus ? "subscribed" : null
+          } button `}
+        >
+          {subscriptionStatus ? "Subscribed" : "Subscribe"}
+        </button>
       </div>
       <div className="videoMetaData__description">
         <ShowMoreText

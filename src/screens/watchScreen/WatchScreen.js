@@ -9,7 +9,11 @@ import {useParams} from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
 
 import {useDispatch,useSelector} from 'react-redux';
-import {getVideoById} from '../../redux/actions/videos.action'
+import {
+  getVideoById,
+  getRelatedVideos,
+} from "../../redux/actions/videos.action";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const WatchScreen = () => {
 
@@ -18,9 +22,14 @@ const WatchScreen = () => {
 
   useEffect(() => {
     dispatch(getVideoById(id))
+    dispatch(getRelatedVideos(id));
   },[dispatch,id])
 
-  const {video,loading} = useSelector(state => state.selectedVideo)
+  const {video,loading} = useSelector(state => state.selectedVideo);
+  // const { videos, loading:relatedVideosLoading } = useSelector((state) => state.relatedVideo);
+  const { videos } = useSelector((state) => state.relatedVideo);
+  
+  const commentCount = video?.statistics;
   
 
     return (
@@ -37,14 +46,28 @@ const WatchScreen = () => {
               allowFullscreen
             ></iframe>
           </div>
-          {!loading ? <VideoMetaData video={video} videoId={id} /> : <h3>loading...</h3>}
+          {!loading ? (
+            <VideoMetaData video={video} videoId={id} />
+          ) : (
+            <SkeletonTheme color="#343a40" highlightColor="#3c4147">
+              <Skeleton width="100%" height="130px" count={15} />
+            </SkeletonTheme>
+          )}
 
-          <Comments />
+          <Comments videoId={id} commentCount={commentCount} />
         </Col>
         <Col lg={4}>
-          {[...Array(9)].map(() => (
-            <VideoHorizontal />
-          ))}
+          {!loading ? (
+            videos
+              ?.filter((video) => video.snippet)
+              .map((video) => (
+                <VideoHorizontal video={video} key={video.id.videoId} />
+              ))
+          ) : (
+            <SkeletonTheme color="#343a40" highlightColor="#3c4147">
+              <Skeleton width="100%" height="130px" count={15} />
+            </SkeletonTheme>
+          )}
         </Col>
       </Row>
     );

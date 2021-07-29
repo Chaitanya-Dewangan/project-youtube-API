@@ -21,7 +21,7 @@ const HomeScreen = () => {
       (state) => state.homeVideos
     );
     const fetchData = () => {
-        console.log("next update")
+       
       if (activeCategory === "All") dispatch(getPopularVideos());
       else {
         dispatch(getVideosByCategory(activeCategory));

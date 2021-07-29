@@ -3,19 +3,21 @@ import './_comment.scss';
 import Avatar from '@material-ui/core/Avatar'
 import moment from 'moment';
 
-const Comment = () => {
+const Comment = ({comment}) => {
+    
     return (
       <div className="comment p-2 d-flex">
         <Avatar
-          className="comment__userImg mr-3"
-          src="https://yt3.ggpht.com/ytc/AKedOLRIec7gUC89wc0OGstCraoIatVagBJHOpLW-n5QrQ=s48-c-k-c0x00ffffff-no-rj"
+          className="comment__userImg mr-3 pointer-cursor"
+          src={comment?.authorProfileImageUrl}
           alt=""
         />
         <div className="comment__body ">
-          <p className="comment__header mb-0">
-            One Plus • {moment("2017-05-06").fromNow()}
+          <p className="comment__header mb-0  ">
+            {comment?.authorDisplayName} <span className="mr-3">•</span>
+            {moment(comment?.publishedAt).fromNow()}
           </p>
-          <p className="mb-0">Nice Video DUDE!!</p>
+          <p className="mb-0">{comment?.textOriginal}</p>
         </div>
       </div>
     );

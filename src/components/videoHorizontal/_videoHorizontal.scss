@@ -13,13 +13,17 @@
       &-wrapper {
           width:100%
       }
+      &-channel{
+         width:75%;
+         border-radius:50%;
+      }
     }
     &__duration{
 
       position: absolute;
       bottom:0.3rem;
       right: 13px;
-      padding:0.2rem;
+      padding:0.3rem ;
       
       background: #080808ec;
       border-radius: 3px;
@@ -41,8 +45,13 @@
     }
 
     &__desc {
-      @include line-clamp(2);
+      @include line-clamp(1);
       font-size: 0.9rem;
+      padding: 0px 12px;
+      
+   }
+   &__channelScreen{
+      @include line-clamp(2);
    }
 
    &__channel {

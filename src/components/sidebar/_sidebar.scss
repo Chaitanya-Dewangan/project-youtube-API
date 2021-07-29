@@ -15,7 +15,10 @@
     position:sticky;
     top: 10vh;
     left: 0;
-
+    a{
+        color: #b1bdb4 !important;
+        text-decoration: none !important;
+    }
     li{
         display:flex;
         align-items:center;
